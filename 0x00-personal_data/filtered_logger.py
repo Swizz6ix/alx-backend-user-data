@@ -8,16 +8,25 @@ import re
 import logging
 import mysql.connector
 
-PII_FIELDS = {"name", "email", "phone", "ssn", "password"}
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
 def filter_datum(
-        fields: List[str], redaction: str, message: str, separator: str):
+        fields: List[str], redaction: str, message: str, separator: str) -> str:
     """
     A function that returns the log message obfuscated
+    Args:
+        fields: a list of strings representing all fields to obfuscate
+        redaction: a string representing by what the field will be obfuscated
+        message: a string representing the log line
+        separator: a string representing by which character is separating all fields in the log line (message)
+    Return:
+        string
     """
-    prgex = '|'.join(map(re.escape, fields)) # \\1 == captured field
-    return re.sub(f'({prgex})=[^\\{separator}]+', f'\\1={redaction}', message)
+    for field in fields:
+        message = re.sub(field+'=.*?'+separator,
+                         field+'='+redaction+separator, message)
+    return  message
 
 
 class RedactingFormatter(logging.Formatter):
@@ -38,6 +47,10 @@ class RedactingFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         """
         A method to filter values in incoming log records using filter_datum.
+        Args:
+            record (logging.LogRecord): LogRecord instance containing message
+        Return:
+            string
         """
         message = super(RedactingFormatter, self).format(record)
         return filter_datum(
@@ -61,10 +74,10 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     A function that returns a connector to the database
     (mysql.connector.connection.MySQLConnection object).
     """
-    db_name = getenv("PERSONAL_DATA_DB_NAME", "")
-    db_host = getenv("PERSONAL_DATA_DB_HOST", "localhost")
-    db_user = getenv("PERSONAL_DATA_DB_USERNAME", "root")
-    db_pass = getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    db_name = getenv("PERSONAL_DATA_DB_NAME")
+    db_host = getenv("PERSONAL_DATA_DB_HOST") or "localhost"
+    db_user = getenv("PERSONAL_DATA_DB_USERNAME") or "root"
+    db_pass = getenv("PERSONAL_DATA_DB_PASSWORD") or ""
     return mysql.connector.connect(
         host = db_host,
         port = 3306,
