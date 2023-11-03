@@ -28,7 +28,6 @@ def filter_datum(
                          field+'='+redaction+separator, message)
     return  message
 
-
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
         """
