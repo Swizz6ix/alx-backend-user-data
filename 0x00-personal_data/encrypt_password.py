@@ -12,6 +12,7 @@ def hash_password(password: str) -> bytes:
     """
     return bcrypt.hashpw(password.encode('utf-8'))
 
+
 def is_valid(hashed_password: bytes, password: str) -> bool:
     """
     A  function that expects 2 arguments and returns a boolean.
