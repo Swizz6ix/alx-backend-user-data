@@ -94,7 +94,7 @@
     In this task you will implement the DB.find_user_by method. This method takes in arbitrary keyword arguments and returns the first row found in the users table as filtered by the method’s input arguments. No validation of input arguments required at this point.
     Make sure that SQLAlchemy’s NoResultFound and InvalidRequestError are raised when no results are found, or when wrong query arguments are passed, respectively.
 
-    > [!Warning:]
+    >[!Warning:]
         - NoResultFound has been moved from sqlalchemy.orm.exc to sqlalchemy.exc between the version 1.3.x and 1.4.x of SQLAchemy - please make sure you are importing it from sqlalchemy.orm.exc
     ```
     bob@dylan:~$ cat main.py
@@ -252,7 +252,7 @@
     ```
     Add the following code at the end of the module:
     ```
-    if **name** == "**main**":
+    if __name__ == "__main__":
         app.run(host="0.0.0.0", port="5000")
     ```
 
@@ -370,7 +370,7 @@
 
 9. Generate UUIDs
     In this task you will implement a \_generate_uuid function in the auth module. The function should return a string representation of a new UUID. Use the uuid module.
-    > [!Note] that the method is private to the auth module and should NOT be used outside of it.
+    >[!Note] that the method is private to the auth module and should NOT be used outside of it.
 
 
 10. Get session ID
