@@ -99,15 +99,25 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 def main() -> None:
     """
     a main function that takes no arguments and returns nothing.
+    connect to the db, retrieve all rows and display each row under a
+    filtered format
     """
+    filtered_fields = "name,email,phone,ssn,passord,ip,last_login, user_agent"
+    cols = filtered_fields.split(',')
+    sqlQuery = f'SELECT {filtered_fields} FROM users;'
     db = get_db()
     logger = get_logger()
-    cursor = db.cursor()
-    cursor.execute("SELECT * FROM users;")
-    fields = cursor.column_names
-    for row in cursor:
-        message = "".join("{}={}; ".format(k, v) for k, v in zip(fields, row))
-        logger.info(message.strip())
+    with db.cursor() as cursor:
+        cursor.execute(sqlQuery)
+        rows = cursor.fetchall()
+        for row in rows:
+            eachRecord = map(
+                lambda x: f'{x[0]}={x[1]}', zip(cols, row)
+            )
+            message = '{};'.format('; '.join(list(eachRecord)))
+            args = ("user_data", logging.INFO, None, None, message, None, None)
+            log_record = logging.LogRecord(*args)
+            logger.hanndle(log_record)
     cursor.close()
     db.close()
 
