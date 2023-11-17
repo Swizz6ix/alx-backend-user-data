@@ -12,21 +12,29 @@ PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
 def filter_datum(
-        fields: List[str], redaction: str, message: str, separator: str) -> str:
+        fields: List[str],
+        redaction: str,
+        message: str,
+        separator: str) -> str:
     """
     A function that returns the log message obfuscated
     Args:
         fields: a list of strings representing all fields to obfuscate
         redaction: a string representing by what the field will be obfuscated
         message: a string representing the log line
-        separator: a string representing by which character is separating all fields in the log line (message)
+        separator: a string representing by which character is separating
+        all fields in the log line (message)
     Return:
         string
     """
     for field in fields:
-        message = re.sub(field+'=.*?'+separator,
-                        field+'='+redaction+separator, message)
-    return  message
+        message = re.sub(
+            field+'=.*?'+separator,
+            field+'='+redaction+separator,
+            message
+        )
+    return message
+
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
@@ -56,6 +64,7 @@ class RedactingFormatter(logging.Formatter):
             self.fields, self.REDACTION, message, self.SEPARATOR
         )
 
+
 def get_logger() -> logging.Logger:
     """
     A  function that takes no arguments and returns a logging.Logger object
@@ -68,6 +77,7 @@ def get_logger() -> logging.Logger:
     newLogger.addHandler(stream_handler)
     return newLogger
 
+
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """
     A function that returns a connector to the database
@@ -78,12 +88,13 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     db_user = getenv("PERSONAL_DATA_DB_USERNAME") or "root"
     db_pass = getenv("PERSONAL_DATA_DB_PASSWORD") or ""
     return mysql.connector.connect(
-        host = db_host,
-        port = 3306,
-        user = db_user,
-        password = db_pass,
-        database = db_name
+        host=db_host,
+        port=3306,
+        user=db_user,
+        password=db_pass,
+        database=db_name
     )
+
 
 def main() -> None:
     """
@@ -99,6 +110,7 @@ def main() -> None:
         logger.info(message.strip())
     cursor.close()
     db.close()
+
 
 if __name__ == "__main__":
     main
