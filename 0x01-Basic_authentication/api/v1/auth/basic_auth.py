@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-""" """
+""" 
+A script that creates a basic_auth class that inherits from Auth
+"""
 from api.v1.auth.auth import Auth
 import binascii
 import base64

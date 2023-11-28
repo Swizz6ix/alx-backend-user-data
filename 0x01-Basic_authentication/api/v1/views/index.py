@@ -9,7 +9,7 @@ from api.v1.views import app_views
 def status() -> str:
     """ GET /api/v1/status
     Return:
-      - the status of the API
+        - the status of the API
     """
     return jsonify({"status": "OK"})
 
@@ -18,7 +18,7 @@ def status() -> str:
 def stats() -> str:
     """ GET /api/v1/stats
     Return:
-      - the number of each objects
+        - the number of each objects
     """
     from models.user import User
     stats = {}
@@ -28,11 +28,11 @@ def stats() -> str:
 
 @app_views.route('/unauthorized', strict_slashes=False)
 def abort_unauthorized_request():
-  """Abort request for error 401"""
-  abort(401)
+    """Abort request for error 401"""
+    abort(401)
 
 
 @app_views.route('/forbidden', strict_slashes=False)
 def abort_no_resources():
-  """Abort request for error 403"""
-  abort(403)
+    """Abort request for error 403"""
+    abort(403)

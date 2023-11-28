@@ -48,10 +48,14 @@ def before_req():
     excluded_endPoints = [
         '/api/v1/status/',
         '/api/v1/unauthorized/',
-        'api/v1/forbidden/'
+        '/api/v1/forbidden/'
     ]
     # if auth is None, do nothing
     if auth is not None:
+        rp = auth.require_auth(request.path, excluded_endPoints)
+        print('gd', request.path)
+        print('yu', excluded_endPoints)
+        print('fe', rp)
         if auth.require_auth(request.path, excluded_endPoints):
             # Get authencaton credentials
             if auth.authorization_header(request) is None:
