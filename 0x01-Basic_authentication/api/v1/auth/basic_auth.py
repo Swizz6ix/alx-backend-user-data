@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" 
+"""
 A script that creates a basic_auth class that inherits from Auth
 """
 from api.v1.auth.auth import Auth
@@ -17,7 +17,7 @@ class BasicAuth(Auth):
         """Initialize class instance"""
 
     def extract_base64_authorization_header(
-        self, authorization_header: str) -> str:
+            self, authorization_header: str) -> str:
         """
         A method that returns the Base64 part of the
         Authorization header for a Basic Authentication
@@ -34,7 +34,8 @@ class BasicAuth(Auth):
         return None
 
     def decode_base64_authorization_header(
-        self, base64_authorization_header: str) -> str:
+            self,
+            base64_authorization_header: str) -> str:
         """
         A method that returns the decoded value of a Base64
         string base64_authorization_header
@@ -53,7 +54,9 @@ class BasicAuth(Auth):
         return None
 
     def extract_user_credentials(
-        self, decoded_base64_authorization_header: str) -> (str, str):
+                        self,
+                        decoded_base64_authorization_header: str
+                        ) -> (str, str):
         """
         A method that that returns the user email and
         password from the Base64 decoded value.
@@ -69,7 +72,7 @@ class BasicAuth(Auth):
         return (None, None)
 
     def user_object_from_credentials(
-        self, user_email: str, user_pwd: str) -> TypeVar('User'):
+            self, user_email: str, user_pwd: str) -> TypeVar('User'):
         """
         A method that that returns the User instance based
         on his email and password.
