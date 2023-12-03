@@ -8,7 +8,7 @@ import os
 
 
 @app_views.route('/auth_session/login/', methods=['POST'],
-    strict_slashes=False)
+                strict_slashes=False)
 def auth_session():
     """Login and create new session id for the user"""
     err = {
@@ -37,7 +37,7 @@ def auth_session():
 
 
 @app_views.route('/auth_session/logout',
-            methods=['DELETE'], strict_slashes=False)
+                methods=['DELETE'], strict_slashes=False)
 def logout() -> (str, int):
     """Log a user out and delete session id"""
     from api.v1.app import auth
