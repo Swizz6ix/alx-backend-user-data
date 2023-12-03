@@ -24,6 +24,12 @@ elif AUTH_TYPE == 'basic_auth':
 elif AUTH_TYPE == 'session_auth':
     from api.v1.auth.session_auth import SessionAuth
     auth = SessionAuth()
+elif AUTH_TYPE == 'session_exp_auth':
+    from api.v1.auth.session_exp_auth import SessionExpAuth
+    auth = SessionExpAuth()
+elif AUTH_TYPE == 'session_db_auth':
+    from api.v1.auth.session_db_auth import SessionDBAuth
+    auth = SessionDBAuth()
 
 
 @app.errorhandler(404)
@@ -60,12 +66,10 @@ def before_req():
         cookie = auth.session_cookie(request)
         if auth.require_auth(request.path, excluded_endPoints):
             # Get authencaton credentials
-            if auth.authorization_header(request) is None:
+            if auth.authorization_header(request) is None and cookie is None:
                 abort(401)
             if auth.current_user(request) is None:
                 abort(403)
-            if auth.authorization_header(request) is None and cookie is None:
-                return abort(401)
             request.current_user = auth.current_user(request)
 
 

@@ -29,7 +29,7 @@ class Auth:
         """Handles authentication of credentials in http header"""
         auth = request.headers.get(
             'Authorization'
-        ) if request is not None else None
+        ) 
         if request is None or auth is None:
             return None
         else:

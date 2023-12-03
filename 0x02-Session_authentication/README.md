@@ -420,7 +420,6 @@
     bob@dylan:~$
     ```
 
-
 7. New view for Session Authentication
     Create a new Flask view that handles all routes for the Session authentication.
     In the file api/v1/views/session_auth.py, create a route POST /auth_session/login (= POST /api/v1/auth_session/login):
@@ -620,7 +619,7 @@
 
     Create a class SessionExpAuth that inherits from SessionAuth in the file api/v1/auth/session_exp_auth.py:
 
-        - Overload def **init**(self): method:
+        - Overload def __init__(self): method:
             - Assign an instance attribute session_duration:
                 - To the environment variable SESSION_DURATION casts to an integer
                 - If this environment variable doesn’t exist or can’t be parse to an integer, assign to 0
@@ -718,11 +717,11 @@
     For avoid that, you will create a new authentication system, based on Session ID stored in database (for us, it will be in a file, like User).
 
     Create a new model UserSession in models/user_session.py that inherits from Base:
-        - Implement the def **init**(self, \*args: list, \*\*kwargs: dict): like in User but for these 2 attributes:
+        - Implement the def __init__(self, \*args: list, \*\*kwargs: dict): like in User but for these 2 attributes:
             - user_id: string
             - session_id: string
-    Create a new authentication class SessionDBAuth in api/v1/auth/session_db_auth.py that inherits from SessionExpAuth:
 
+    Create a new authentication class SessionDBAuth in api/v1/auth/session_db_auth.py that inherits from SessionExpAuth:
         - Overload def create_session(self, user_id=None): that creates and stores new instance of UserSession and returns the Session ID
         - Overload def user_id_for_session_id(self, session_id=None): that returns the User ID by requesting UserSession in the database based on session_id
         - Overload def destroy_session(self, request=None): that destroys the UserSession based on the Session ID from the request cookie
