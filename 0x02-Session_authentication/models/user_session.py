@@ -2,6 +2,7 @@
 """A model that that enables session to be stored in database"""
 from models.base import Base
 
+
 class UserSession(Base):
     """A model that allows sessions to be stored in the database"""
     def __init__(self, *args: list, **kwargs: dict):

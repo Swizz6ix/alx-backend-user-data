@@ -4,6 +4,7 @@
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from datetime import datetime, timedelta
 
+
 class SessionDBAuth(SessionExpAuth):
     """
     stores authorization system in database with expiration time
@@ -12,12 +13,12 @@ class SessionDBAuth(SessionExpAuth):
         """Initializes the class with SessionExAuth"""
         super().__init__()
 
-    def create_session(self, user_id=None): 
+    def create_session(self, user_id=None):
         """
         A module that creates and stores new instance of UserSession
         and returns the Session ID
         """
-        session = create_session(user_id)
+        session_id = create_session(user_id)
         if type(session_id) is str:
             dic = {
                 'user_id': user_id,
