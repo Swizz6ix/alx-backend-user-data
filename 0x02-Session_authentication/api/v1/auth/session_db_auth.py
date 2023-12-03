@@ -11,7 +11,7 @@ class SessionDBAuth(SessionExpAuth):
     """
     def __init__(self) -> None:
         """Initializes the class with SessionExAuth"""
-        super().__init__()
+        super().__init__(create_session)
 
     def create_session(self, user_id=None):
         """
