@@ -9,10 +9,6 @@ class SessionDBAuth(SessionExpAuth):
     """
     stores authorization system in database with expiration time
     """
-    def __init__(self) -> None:
-        """Initializes the class with SessionExAuth"""
-        super().__init__(create_session)
-
     def create_session(self, user_id=None):
         """
         A module that creates and stores new instance of UserSession
