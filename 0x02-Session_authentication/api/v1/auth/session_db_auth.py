@@ -18,7 +18,7 @@ class SessionDBAuth(SessionExpAuth):
         A module that creates and stores new instance of UserSession
         and returns the Session ID
         """
-        session_id = create_session(user_id)
+        session_id = super().create_session(user_id)
         if type(session_id) is str:
             dic = {
                 'user_id': user_id,
