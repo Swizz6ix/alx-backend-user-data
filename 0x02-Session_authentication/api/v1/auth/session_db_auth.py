@@ -11,7 +11,7 @@ class SessionDBAuth(SessionExpAuth):
     """
     stores authorization system in database with expiration time
     """
-    def create_session(self, user_id=None):
+    def create_session(self, user_id=None) -> str:
         """
         A module that creates and stores new instance of UserSession
         and returns the Session ID
@@ -22,7 +22,7 @@ class SessionDBAuth(SessionExpAuth):
                 'user_id': user_id,
                 'session_id': session_id
             }
-            new_user = UserSession(**dict)
+            new_user = UserSession(**dic)
             new_user.save()
             return session_id
 
